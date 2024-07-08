@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timbu_shop/services/product_service.dart';
 import 'package:timbu_shop/ui/screens/home/product_details.dart';
 
 import '../../../model/product_item.dart';
@@ -20,6 +21,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    final data = ProductService();
+    final myItems = data.fetchData();
+
+    debugPrint(myItems.toString());
+
     productItems = [
       ProductItem(title: "Nike",
           images: ["nike2.jpg","nike3.jpg","nike1.jpg",],
@@ -37,6 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
           images: ["nike3.jpg","nike1.jpg","nike2.jpg"],
           pricing: "\$30"),
     ];
+
+
+
   }
 
 
@@ -105,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: ()async{
         await Navigator.push(context,
             MaterialPageRoute(
-                builder: (context) => ProductDetails()
+                builder: (context) => ProductDetails( product: productItem,)
             )
         );
       },

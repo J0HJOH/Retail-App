@@ -1,8 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:timbu_shop/model/cart_item.dart';
+import 'package:timbu_shop/model/product_item.dart';
+import 'package:timbu_shop/ui/screens/cart/cart_provider.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({super.key});
+  final ProductItem product;
+  const ProductDetails({super.key, required this.product});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -16,6 +21,13 @@ class _ProductDetailsState extends State<ProductDetails> {
     setState(() {
       selectedButton = buttonIndex;
     });
+  }
+
+  void addToCart(ProductItem myItem){
+    // CartItem newItem = CartItem(quantity: 1,
+    //     name: 'Nike Shoe', image: 'nike1.jpg', price: 13.0);
+    Provider.of<CartProvider>
+      (context, listen: false).addToCart(myItem);
   }
 
   final List<String> _images = [
@@ -48,7 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
              _currentSlide = index;
            });
          }),
-          items: _images.map((image) =>
+          items: widget.product.images.map((image) =>
               Builder(builder: (context)=>
                   Image.asset(image, fit: BoxFit.cover,))
           ).toList(),
@@ -59,12 +71,12 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              Text("Shoe",
+              Text( widget.product.title,
               style: TextStyle(
                 fontSize: 24, fontWeight: FontWeight.bold
               ),),
               Spacer(),
-              Text("\$16.99",
+              Text(widget.product.pricing,
               style: TextStyle(fontSize: 16.0),)
             ],
             ),
@@ -119,7 +131,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: selectedButton == 2?Colors.green:Colors.white
                 ),
-                onPressed: (){selectButton(2);},
+                onPressed: (){
+                  selectButton(2);
+                  addToCart(widget.product);},
                 child: Text("ADD TO CART",
                 style: TextStyle(color: selectedButton == 2?Colors.white:Colors.black,
                     fontSize: 18),),

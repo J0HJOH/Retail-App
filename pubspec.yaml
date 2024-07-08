@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   device_preview: ^1.2.0
   carousel_slider: ^4.2.1
+  provider: ^6.1.2
+  http: ^1.2.1
+  flutter_curl: ^0.3.0
 
 dev_dependencies:
   flutter_test:

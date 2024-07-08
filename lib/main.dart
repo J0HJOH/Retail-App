@@ -1,12 +1,18 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:timbu_shop/ui/screens/cart/cart_provider.dart';
 import 'package:timbu_shop/ui/spalshscreen.dart';
 
 void main() {
   runApp(DevicePreview(
       enabled: !kReleaseMode,
-      builder: (context) => const MyApp()));
+      builder: (context) => ChangeNotifierProvider(
+          create: (context)=>CartProvider(),
+          child: const MyApp())
+  )
+  );
 }
 
 
@@ -21,4 +27,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
